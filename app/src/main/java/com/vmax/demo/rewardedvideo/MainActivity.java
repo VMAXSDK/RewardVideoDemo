@@ -3,6 +3,7 @@ package com.vmax.demo.rewardedvideo;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -36,15 +37,15 @@ public class MainActivity extends AppCompatActivity {
         UI_Container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Log.e("On Cklic","dljnhaq");
+                   if(vmaxAdView.getAdState().equals(VmaxAdView.AdState.STATE_AD_READY))
                     vmaxAdView.showAd();
+                else
+                       Toast.makeText(getApplicationContext(),"Ad Not Loaded Please Re-run The App",Toast.LENGTH_LONG).show();
             }
         });
 
     }
-
-
-
 
 
     /** Method for Loading Reward Video */
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onAdEnd(boolean isVideoCompleted, long reward) {
-                Toast.makeText(getApplicationContext(),"You Have Earned"+String.valueOf(reward),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"You Have Earned :- "+String.valueOf(reward)+" Points",Toast.LENGTH_LONG).show();
             }
         });
 
