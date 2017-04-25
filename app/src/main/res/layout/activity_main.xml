@@ -12,21 +12,22 @@
     <!--UI Container-->
         <LinearLayout
 
-            android:background="@drawable/interstitial_back"
+            android:background="@mipmap/background"
             android:orientation="vertical"
             android:id="@+id/UI_Container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"/>
 
 
 <FrameLayout
-    android:layout_marginBottom="150dp"
-    android:layout_alignParentBottom="true"
+    android:layout_marginTop="130dp"
+    android:layout_alignParentTop="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
- <TextView
-android:layout_gravity="center"
-     android:textColor="@color/white"
+
+    <TextView
+    android:layout_gravity="center"
+        android:textColor="@color/white"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Click On The Image To See a Video And Earn Points"
