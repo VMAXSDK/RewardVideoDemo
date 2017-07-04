@@ -7,7 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.vmax.android.ads.api.VmaxAdReward;
 import com.vmax.android.ads.api.VmaxAdView;
+import com.vmax.android.ads.api.VmaxSdk;
 import com.vmax.android.ads.common.VmaxAdListener;
 import com.vmax.android.ads.exception.VmaxAdError;
 
@@ -25,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     public   VmaxAdView vmaxAdView;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
         UI_Container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("On Cklic","dljnhaq");
-                   if(vmaxAdView.getAdState().equals(VmaxAdView.AdState.STATE_AD_READY))
+
+                if(vmaxAdView.getAdState().equals(VmaxAdView.AdState.STATE_AD_READY))
                     vmaxAdView.showAd();
                 else
-                       Toast.makeText(getApplicationContext(),"Ad Not Loaded Please Re-run The App",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Ad Not Loaded Please Re-run The App",Toast.LENGTH_LONG).show();
             }
         });
 
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
          * would be one of the parameters in the post request eg. advid=2cf626f0-08ac-4a4d-933c-00ecd0256cf4*/
 
    /** DON'T INCLUDE vmaxAdView.setTestDevices() WHILE GOING LIVE WITH YOUR PROJECT AS THIS SERVES ONLY TEST ADS;*/
-        vmaxAdView.setTestDevices(VmaxAdView.TEST_via_ADVID,"<REPLACE WITH YOUR ADVID>");
+//        vmaxAdView.setTestDevices(VmaxAdView.TEST_via_ADVID,"2cf626f0-08ac-4a4d-933c-00ecd0256cf4");
 
 
         vmaxAdView.setAdListener(new VmaxAdListener() {
@@ -69,17 +71,23 @@ public class MainActivity extends AppCompatActivity {
             public void onAdError(VmaxAdError error) {
 
             }
+
+            @Override
+            public void onAdClose() {
+
+            }
+
+            @Override
+            public void onAdMediaEnd(boolean b, long l) {
+                Toast.makeText(getApplicationContext(),"You Have Earned :- "+String.valueOf(l)+" Points",Toast.LENGTH_LONG).show();
+
+            }
+
             @Override
             public void onAdReady(VmaxAdView adView) {
 
             }
-            @Override
-            public void onAdDismissed(VmaxAdView adView) {
-            }
-            @Override
-            public void onAdEnd(boolean isVideoCompleted, long reward) {
-                Toast.makeText(getApplicationContext(),"You Have Earned :- "+String.valueOf(reward)+" Points",Toast.LENGTH_LONG).show();
-            }
+
         });
 
         vmaxAdView.cacheAd();
@@ -91,25 +99,7 @@ public class MainActivity extends AppCompatActivity {
    
     /** Handle vmaxAdView object for Activity Lifecycle changes */
 
-    @Override
-    protected void onPause() {
-        if (vmaxAdView != null) {
-            /** To Pause Refresh Of The Ad While Activity Isn't in Foreground */
-            vmaxAdView.onPause();
-        }
 
-        super.onPause();
-    }
-    @Override
-    protected void onResume() {
-        if (vmaxAdView != null) {
-            /** To Resume Refresh Of The Ad While Activity Comes Back To Foreground */
-
-            vmaxAdView.onResume();
-
-        }
-        super.onResume();
-    }
     @Override
     protected void onDestroy() {
         if (vmaxAdView != null) {
@@ -121,16 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if (vmaxAdView != null) {
 
-            /** To Reconfigure vmaxAdview According To Configuration Changes*/
-            vmaxAdView.onConfigurationChanged();
-        }
-
-    }
 
 
 }
